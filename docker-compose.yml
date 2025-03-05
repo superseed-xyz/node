@@ -3,15 +3,13 @@ services:
     image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101500.1
     restart: unless-stopped
     stop_grace_period: 5m
-    entrypoint: /scripts/${NETWORK_NAME}/start-op-geth.sh
-    env_file:
-      - .env
+    entrypoint: /scripts/start-op-geth.sh
     volumes:
       - ./scripts/:/scripts
-      - /op-data/:/op-data
+      - /home/ubuntu/op-data:/home/ubuntu/op-data
     ports:
-      - 8545:8545
-      - 8546:8546
+      - 9993:8545
+      - 9994:8546
       - 39393:39393/udp
       - 39393:39393/tcp
 
@@ -19,12 +17,10 @@ services:
     image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:v1.11.2
     restart: unless-stopped
     stop_grace_period: 5m
-    entrypoint: /scripts/${NETWORK_NAME}/start-op-node.sh
-    env_file:
-      - .env
+    entrypoint: /scripts/start-op-node.sh
     volumes:
       - ./scripts/:/scripts
-      - /op-data/:/op-data
+      - /home/ubuntu/op-data:/home/ubuntu/op-data
     ports:
       - 9003:9003/udp
       - 9003:9003/tcp
@@ -35,15 +31,13 @@ services:
     image: ethereum/client-go:v1.15.2
     restart: unless-stopped
     stop_grace_period: 5m
-    entrypoint: /scripts/${NETWORK_NAME}/start-geth.sh
-    env_file:
-      - .env
+    entrypoint: /scripts/start-geth.sh
     volumes:
       - ./scripts/:/scripts
-      - /data/:/data
+      - /home/ubuntu/data:/home/ubuntu/data
     ports:
-      - 8547:8545
-      - 8548:8546
+      - 8545:8545
+      - 8546:8546
       - 30303:30303
       - 30303:30303
 
@@ -53,19 +47,52 @@ services:
     container_name: prysm-beacon
     restart: unless-stopped
     ports:
-      - 4000:4000     
-      - 3500:3500     
-      - 8080:8080    
+      - "4000:4000"     
+      - "3500:3500"     
+      - "8080:8080"    
     volumes:
-      - /data/:/data
+      - /home/ubuntu/data:/home/ubuntu/data
     command:
-      - "--checkpoint-sync-url=https://your-beacon-url"
-      - "--genesis-beacon-api-url=https://your-beacon-url"
-      - "--datadir=/data/prysm-data"
-      - "--jwt-secret=/data/secret.jwt"
+      - "--checkpoint-sync-url=https://beacon-chain-checkpoint-sync-endpoint"
+      - "--genesis-beacon-api-url=https://beacon-chain-checkpoint-sync-endpoint"
+      - "--datadir=/home/ubuntu/data/prysm-data"
+      - "--jwt-secret=/home/ubuntu/data/secret.jwt"
       - "--execution-endpoint=http://geth:8551"
       - "--rpc-host=0.0.0.0"
       - "--grpc-gateway-host=0.0.0.0"
       - "--monitoring-host=0.0.0.0"
       - "--accept-terms-of-use"
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    restart: unless-stopped
+    user: root
+    env_file:
+      - .env
+    volumes:
+      - ./docker/prometheus:/etc/prometheus
+      - /home/ubuntu/prometheus_data:/prometheus
+    ports:
+      - 9090:9090
 
+  grafana:
+    image: grafana/grafana:11.5.1
+    restart: unless-stopped
+    user: root
+    env_file:
+      - ./envs/common/grafana.env
+    volumes:
+      - ./docker/grafana/provisioning/:/etc/grafana/provisioning/:ro
+      - ./docker/grafana/dashboards/simple_node_dashboard.json:/var/lib/grafana/dashboards/simple_node_dashboard.json
+      - /home/ubuntu/grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+  # influxdb:
+  #   image: influxdb:1.8
+  #   restart: unless-stopped
+  #   env_file:
+  #     - ./envs/common/influxdb.env
+  #   volumes:
+  #     - ./docker/influxdb/influx_init.iql:/docker-entrypoint-initdb.d/influx_init.iql
+  #     - /home/ubuntu/influxdb_data:/var/lib/influxdb
+  #   ports:
+  #     - 8086:8086
