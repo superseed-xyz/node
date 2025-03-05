@@ -76,7 +76,7 @@ services:
       - .env
     volumes:
       - ./docker/prometheus:/etc/prometheus
-      - /home/ubuntu/prometheus_data:/prometheus
+      - /prometheus_data:/prometheus
     ports:
       - 9090:9090
 
@@ -89,7 +89,7 @@ services:
     volumes:
       - ./docker/grafana/provisioning/:/etc/grafana/provisioning/:ro
       - ./docker/grafana/dashboards/simple_node_dashboard.json:/var/lib/grafana/dashboards/simple_node_dashboard.json
-      - /home/ubuntu/grafana_data:/var/lib/grafana
+      - /grafana_data:/var/lib/grafana
     ports:
       - 3000:3000
   # influxdb:
@@ -99,6 +99,12 @@ services:
   #     - ./envs/common/influxdb.env
   #   volumes:
   #     - ./docker/influxdb/influx_init.iql:/docker-entrypoint-initdb.d/influx_init.iql
-  #     - /home/ubuntu/influxdb_data:/var/lib/influxdb
+  #     - /influxdb_data:/var/lib/influxdb
   #   ports:
   #     - 8086:8086
+volumes:
+  data:
+  op-data:
+  grafana_data:
+  prometheus_data:
+  #influxdb_data:
