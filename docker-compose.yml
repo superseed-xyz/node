@@ -68,4 +68,43 @@ services:
       - "--grpc-gateway-host=0.0.0.0"
       - "--monitoring-host=0.0.0.0"
       - "--accept-terms-of-use"
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    restart: unless-stopped
+    user: root
+    env_file:
+      - .env
+    volumes:
+      - ./docker/prometheus:/etc/prometheus
+      - /prometheus_data:/prometheus
+    ports:
+      - 9090:9090
 
+  grafana:
+    image: grafana/grafana:11.5.1
+    restart: unless-stopped
+    user: root
+    env_file:
+      - ./envs/common/grafana.env
+    volumes:
+      - ./docker/grafana/provisioning/:/etc/grafana/provisioning/:ro
+      - ./docker/grafana/dashboards/simple_node_dashboard.json:/var/lib/grafana/dashboards/simple_node_dashboard.json
+      - /grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+  # influxdb:
+  #   image: influxdb:1.8
+  #   restart: unless-stopped
+  #   env_file:
+  #     - ./envs/common/influxdb.env
+  #   volumes:
+  #     - ./docker/influxdb/influx_init.iql:/docker-entrypoint-initdb.d/influx_init.iql
+  #     - /influxdb_data:/var/lib/influxdb
+  #   ports:
+  #     - 8086:8086
+volumes:
+  data:
+  op-data:
+  grafana_data:
+  prometheus_data:
+  #influxdb_data:
