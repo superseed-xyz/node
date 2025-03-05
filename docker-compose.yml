@@ -3,13 +3,15 @@ services:
     image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-geth:v1.101500.1
     restart: unless-stopped
     stop_grace_period: 5m
-    entrypoint: /scripts/start-op-geth.sh
+    entrypoint: /scripts/${NETWORK_NAME}/start-op-geth.sh
+    env_file:
+      - .env
     volumes:
       - ./scripts/:/scripts
-      - /home/ubuntu/op-data:/home/ubuntu/op-data
+      - /op-data/:/op-data
     ports:
-      - 9993:8545
-      - 9994:8546
+      - 8545:8545
+      - 8546:8546
       - 39393:39393/udp
       - 39393:39393/tcp
 
@@ -17,10 +19,12 @@ services:
     image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:v1.11.2
     restart: unless-stopped
     stop_grace_period: 5m
-    entrypoint: /scripts/start-op-node.sh
+    entrypoint: /scripts/${NETWORK_NAME}/start-op-node.sh
+    env_file:
+      - .env
     volumes:
       - ./scripts/:/scripts
-      - /home/ubuntu/op-data:/home/ubuntu/op-data
+      - /op-data/:/op-data
     ports:
       - 9003:9003/udp
       - 9003:9003/tcp
@@ -31,13 +35,15 @@ services:
     image: ethereum/client-go:v1.15.2
     restart: unless-stopped
     stop_grace_period: 5m
-    entrypoint: /scripts/start-geth.sh
+    entrypoint: /scripts/${NETWORK_NAME}/start-geth.sh
+    env_file:
+      - .env
     volumes:
       - ./scripts/:/scripts
-      - /home/ubuntu/data:/home/ubuntu/data
+      - /data/:/data
     ports:
-      - 8545:8545
-      - 8546:8546
+      - 8547:8545
+      - 8548:8546
       - 30303:30303
       - 30303:30303
 
@@ -47,16 +53,16 @@ services:
     container_name: prysm-beacon
     restart: unless-stopped
     ports:
-      - "4000:4000"     
-      - "3500:3500"     
-      - "8080:8080"    
+      - 4000:4000     
+      - 3500:3500     
+      - 8080:8080    
     volumes:
-      - /home/ubuntu/data:/home/ubuntu/data
+      - /data/:/data
     command:
-      - "--checkpoint-sync-url=https://beacon-chain-checkpoint-sync-endpoint"
-      - "--genesis-beacon-api-url=https://beacon-chain-checkpoint-sync-endpoint"
-      - "--datadir=/home/ubuntu/data/prysm-data"
-      - "--jwt-secret=/home/ubuntu/data/secret.jwt"
+      - "--checkpoint-sync-url=https://your-beacon-url"
+      - "--genesis-beacon-api-url=https://your-beacon-url"
+      - "--datadir=/data/prysm-data"
+      - "--jwt-secret=/data/secret.jwt"
       - "--execution-endpoint=http://geth:8551"
       - "--rpc-host=0.0.0.0"
       - "--grpc-gateway-host=0.0.0.0"
