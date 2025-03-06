@@ -181,7 +181,20 @@ docker compose down -v
 
 Will shut down the node and WIPE ALL DATA. Proceed with caution!
 
-## Monitoring
+## Monitoring Guidelines
+
+In order to maintain a healthy node that passes the Integrity Protocol's checks, you should have a monitoring system in place. Blockchain nodes usually offer metrics regarding the node's behaviour and health - a popular way to offer these metrics is Prometheus-like metrics. The most popular monitoring stack, which is also open source, consists of:
+
+* Prometheus - scrapes and stores metrics as time series data (blockchain nodes cand send the metrics to it);
+* Grafana - allows querying, visualization and alerting based on metrics (can use Prometheus as a data source);
+* Alertmanager - handles alerting (can use Prometheus metrics as data for creating alerts);
+* Node Exporter - exposes hardware and kernel-related metrics (can send the metrics to Prometheus).
+
+We will assume that Prometheus/Grafana/Alertmanager are already installed (we will provide a detailed guide of how to set up monitoring and alerting with the Prometheus + Grafana stack at a later time; for now, if you do not have the stack already installed, please follow this official basic guide [here](https://grafana.com/docs/grafana/latest/getting-started/get-started-grafana-prometheus/)).
+
+We recommend installing the Node Exporter utility since it offers valuable information regarding CPU, RAM & storage. This way, you will be able to monitor possible hardware bottlenecks, or to check if your node is underutilized - you could use these valuable insights to make decisions regarding scaling up/down the allocated hardware resources.
+
+In the config folder of the repo you can find a script that installs Node Exporter as a system service.
 
 ### Estimate remaining sync time
 
@@ -216,11 +229,3 @@ Navigate over to `Dashboards > Manage > Simple Node Dashboard` to see the dashbo
 
 ![metrics dashboard gif](https://user-images.githubusercontent.com/14298799/171476634-0cb84efd-adbf-4732-9c1d-d737915e1fa7.gif)
 
-## Troubleshooting
-
-### Walking back L1Block with curr=0x0000...:0 next=0x0000...:0
-
-If you experience "walking back L1Block with curr=0x0000...:0 next=0x0000...:0" for a long time after the Ecotone upgrade, consider these fixes:
-
-1. Wait for a few minutes. This issue usually resolves itself after some time.
-2. Restart docker compose: `docker compose down` and `docker compose up -d --build`
