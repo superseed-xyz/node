@@ -35,6 +35,7 @@ services:
 
   geth:
     image: ethereum/client-go:v1.15.2
+    container_name: geth
     restart: unless-stopped
     stop_grace_period: 5m
     entrypoint: /scripts/${NETWORK_NAME}/start-geth.sh
@@ -54,12 +55,15 @@ services:
     image: gcr.io/prysmaticlabs/prysm/beacon-chain:v5.3.0
     container_name: prysm-beacon
     restart: unless-stopped
+    stop_grace_period: 5m 
+    env_file:
+      - .env
+    volumes:
+      - /data/:/data
     ports:
       - 4000:4000     
       - 3500:3500     
-      - 8080:8080    
-    volumes:
-      - /data/:/data
+      - 8080:8080   
     command:
       - "--checkpoint-sync-url=https://your-beacon-url"
       - "--genesis-beacon-api-url=https://your-beacon-url"
@@ -70,10 +74,11 @@ services:
       - "--grpc-gateway-host=0.0.0.0"
       - "--monitoring-host=0.0.0.0"
       - "--accept-terms-of-use"
+
+
   prometheus:
     image: prom/prometheus:v3.1.0
     restart: unless-stopped
-    user: root
     env_file:
       - .env
     volumes:
@@ -82,10 +87,10 @@ services:
     ports:
       - 9090:9090
 
+
   grafana:
     image: grafana/grafana:11.5.1
     restart: unless-stopped
-    user: root
     env_file:
       - ./envs/common/grafana.env
     volumes:
@@ -94,6 +99,8 @@ services:
       - /grafana_data:/var/lib/grafana
     ports:
       - 3000:3000
+
+
   influxdb:
     image: influxdb:1.8
     restart: unless-stopped
@@ -104,6 +111,8 @@ services:
       - /influxdb_data:/var/lib/influxdb
     ports:
       - 8086:8086
+
+      
 volumes:
   data:
   op-data:
