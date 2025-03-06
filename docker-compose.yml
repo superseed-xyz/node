@@ -5,6 +5,7 @@ services:
     stop_grace_period: 5m
     entrypoint: /scripts/${NETWORK_NAME}/start-op-geth.sh
     env_file:
+      - ./envs/${NETWORK_NAME}/op-geth.env
       - .env
     volumes:
       - ./scripts/:/scripts
@@ -21,6 +22,7 @@ services:
     stop_grace_period: 5m
     entrypoint: /scripts/${NETWORK_NAME}/start-op-node.sh
     env_file:
+      - ./envs/${NETWORK_NAME}/op-node.env
       - .env
     volumes:
       - ./scripts/:/scripts
@@ -92,19 +94,19 @@ services:
       - /grafana_data:/var/lib/grafana
     ports:
       - 3000:3000
-  # influxdb:
-  #   image: influxdb:1.8
-  #   restart: unless-stopped
-  #   env_file:
-  #     - ./envs/common/influxdb.env
-  #   volumes:
-  #     - ./docker/influxdb/influx_init.iql:/docker-entrypoint-initdb.d/influx_init.iql
-  #     - /influxdb_data:/var/lib/influxdb
-  #   ports:
-  #     - 8086:8086
+  influxdb:
+    image: influxdb:1.8
+    restart: unless-stopped
+    env_file:
+      - ./envs/common/influxdb.env
+    volumes:
+      - ./docker/influxdb/influx_init.iql:/docker-entrypoint-initdb.d/influx_init.iql
+      - /influxdb_data:/var/lib/influxdb
+    ports:
+      - 8086:8086
 volumes:
   data:
   op-data:
   grafana_data:
   prometheus_data:
-  #influxdb_data:
+  influxdb_data:
