@@ -56,8 +56,6 @@ services:
     container_name: prysm-beacon
     restart: unless-stopped
     stop_grace_period: 5m 
-    env_file:
-      - .env
     volumes:
       - /data/:/data
     ports:
@@ -112,7 +110,7 @@ services:
     ports:
       - 8086:8086
 
-      
+
 volumes:
   data:
   op-data:
