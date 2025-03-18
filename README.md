@@ -26,9 +26,8 @@ A simple docker compose script for launching full / archive node for the Superse
 
 ### Install docker and docker compose
 
-> Note: If you're not logged in as root, you'll need to log out and log in again after installation to complete the docker installation.
+> Note: If you're not logged in as root, you'll need to log out and log in again after installation to complete the docker installation. This command installs docker and docker compose for Ubuntu. For windows and mac desktop or laptop, please use Docker Desktop. For other OS, please find instructions in Google.
 
-Note: This command installs docker and docker compose for Ubuntu. For windows and mac desktop or laptop, please use Docker Desktop. For other OS, please find instructions in Google.
 
 ```sh
 # Update and upgrade packages
@@ -100,6 +99,15 @@ Open `.env` with your editor of choice
   - `erigon` - Erigon
   - `basic` - Other providers
 
+> Note: At the moment, we are troubleshooting starting up from scratch a Superseed node on Sepolia because there are few issues in doing it. In order to avoid stumbling accross this temporary issue, you can go ahead and try our most recent testnet node snapshot:
+
+```sh
+wget https://storage.googleapis.com/conduit-networks-snapshots/sepolia-superseed-826s35710w/latest.tar
+```
+
+```sh
+tar -xvf latest.tar
+```
 ### Optional configurations
 
 - **OP_GETH\_\_SYNCMODE** - Specify sync mode for the execution client
@@ -228,4 +236,5 @@ Use the following login details to access the dashboard:
 Navigate over to `Dashboards > Manage > Simple Node Dashboard` to see the dashboard, see the following gif if you need help:
 
 ![metrics dashboard gif](https://user-images.githubusercontent.com/14298799/171476634-0cb84efd-adbf-4732-9c1d-d737915e1fa7.gif)
+
 
