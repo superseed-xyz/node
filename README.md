@@ -12,15 +12,17 @@ A simple docker compose script for launching full / archive node for the Superse
 
 ### Mainnet
 
-- 16GB+ RAM
-- 2 TB SSD (NVME Recommended)
+- 8GB+ RAM
+- 500 GB SSD (NVME Recommended)
 - 100mb/s+ Download
 
 ### Testnet
 
-- 16GB+ RAM
+- 8GB+ RAM
 - 500 GB SSD (NVME Recommended)
 - 100mb/s+ Download
+
+> Note: Please keep in mind if you are going to run also Ethereum node locally (EL+CL layers), these system requirements will significantly grow up!
 
 ## Installation and Configuration
 
@@ -99,15 +101,22 @@ Open `.env` with your editor of choice
   - `erigon` - Erigon
   - `basic` - Other providers
 
-> Note: At the moment, we are troubleshooting starting up from scratch a Superseed node on Sepolia because there are few issues in doing it. In order to avoid stumbling accross this temporary issue, you can go ahead and try our most recent testnet node snapshot:
 
+### Snapshots
+  
+For faster synchronization you can make use of the  following snapshots:
+
+
+**Mainnet**:
+```sh
+wget https://storage.googleapis.com/conduit-networks-snapshots/superseed-mainnet-0/latest.tar
+```
+**Testnet**:
 ```sh
 wget https://storage.googleapis.com/conduit-networks-snapshots/sepolia-superseed-826s35710w/latest.tar
 ```
 
-```sh
-tar -xvf latest.tar
-```
+
 ### Optional configurations
 
 - **OP_GETH\_\_SYNCMODE** - Specify sync mode for the execution client
@@ -236,5 +245,6 @@ Use the following login details to access the dashboard:
 Navigate over to `Dashboards > Manage > Simple Node Dashboard` to see the dashboard, see the following gif if you need help:
 
 ![metrics dashboard gif](https://user-images.githubusercontent.com/14298799/171476634-0cb84efd-adbf-4732-9c1d-d737915e1fa7.gif)
+
 
 
