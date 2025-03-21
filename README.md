@@ -22,7 +22,7 @@ A simple docker compose script for launching full / archive node for the Superse
 - 500 GB SSD (NVME Recommended)
 - 100mb/s+ Download
 
-> Note: Please keep in mind if you are going to run also Ethereum node locally (EL+CL layers), these system requirements will significantly grow up!
+> Note: Please keep in mind if you are going to run also Ethereum node locally (EL+CL layers), these system requirements will significantly grow!
 
 ## Installation and Configuration
 
