@@ -107,14 +107,10 @@ Open `.env` with your editor of choice
 For faster synchronization you can make use of the  following snapshots:
 
 
-**Mainnet**:
-```sh
-wget https://storage.googleapis.com/conduit-networks-snapshots/superseed-mainnet-0/latest.tar
-```
-**Testnet**:
-```sh
-wget https://storage.googleapis.com/conduit-networks-snapshots/sepolia-superseed-826s35710w/latest.tar
-```
+**Mainnet**: https://storage.googleapis.com/conduit-networks-snapshots/superseed-mainnet-0/latest.tar
+
+**Testnet**: https://storage.googleapis.com/conduit-networks-snapshots/sepolia-superseed-826s35710w/latest.tar
+
 
 
 ### Optional configurations
@@ -245,6 +241,4 @@ Use the following login details to access the dashboard:
 Navigate over to `Dashboards > Manage > Simple Node Dashboard` to see the dashboard, see the following gif if you need help:
 
 ![metrics dashboard gif](https://user-images.githubusercontent.com/14298799/171476634-0cb84efd-adbf-4732-9c1d-d737915e1fa7.gif)
-
-
 
