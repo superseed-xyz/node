@@ -222,7 +222,7 @@ Uses `Cast` command from Foundry tool set. Installation instructions here: https
 This will show the sync speed in blocks per minute and the time until sync is completed.
 
 ```
-Chain ID: 57073
+Chain ID: 5330
 Please wait
 Blocks per minute: ...
 Hours until sync is completed: ...
