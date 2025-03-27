@@ -14,6 +14,7 @@ exec op-node \
     --rollup.load-protocol-versions=true \
     --rollup.config=/config/${NETWORK_NAME}/rollup.json \
     --p2p.bootnodes=enode://your-bootnodes \
+    --p2p.sync.onlyreqtostatic=true \
     --override.granite=1732546800 \
     --override.holocene=1732633200 \
     --override.pectrablobschedule=1742486400
