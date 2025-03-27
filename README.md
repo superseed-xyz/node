@@ -211,21 +211,13 @@ In the config folder of the repo you can find a script that installs Node Export
 
 ### Estimate remaining sync time
 
-Run progress.sh to estimate remaining sync time and speed.
-
-Uses `Cast` command from Foundry tool set. Installation instructions here: https://getfoundry.sh/.
-
-```sh
-./progress.sh
-```
-
-This will show the sync speed in blocks per minute and the time until sync is completed.
+Run following `curl` to estimate remaining sync time.
+This will show the time until sync is completed.
 
 ```
-Chain ID: 5330
-Please wait
-Blocks per minute: ...
-Hours until sync is completed: ...
+echo "Latest synced block: $(curl -s -d '{"id":0,"jsonrpc":"2.0","method":"optimism_syncStatus"}' -H "Content-Type: application/json" http://localhost:9545 | jq -r '.result.unsafe_l2.number') , behind by: $(( ( $(date +%s) - $(curl -s -d '{
+"id":0,"jsonrpc":"2.0","method":"optimism_syncStatus"}' -H "Content-Type: application/json" http://localhost:9545 | jq -r '.result.unsafe_l2.tim
+estamp') ) / 3600 )) hours"
 ```
 
 ### Grafana dashboard
@@ -241,4 +233,5 @@ Use the following login details to access the dashboard:
 Navigate over to `Dashboards > Manage > Simple Node Dashboard` to see the dashboard, see the following gif if you need help:
 
 ![metrics dashboard gif](https://user-images.githubusercontent.com/14298799/171476634-0cb84efd-adbf-4732-9c1d-d737915e1fa7.gif)
+
 

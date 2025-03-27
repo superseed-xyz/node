@@ -90,7 +90,7 @@ services:
     image: grafana/grafana:11.5.1
     restart: unless-stopped
     env_file:
-      - ./envs/common/grafana.env
+      - ./config/monitoring/grafana.env
     volumes:
       - ./docker/grafana/provisioning/:/etc/grafana/provisioning/:ro
       - ./docker/grafana/dashboards/simple_node_dashboard.json:/var/lib/grafana/dashboards/simple_node_dashboard.json
