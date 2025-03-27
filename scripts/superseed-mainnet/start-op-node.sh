@@ -15,4 +15,5 @@ exec op-node \
     --override.granite=1726185601 \
     --l1.beacon=https://your-beacon-node-endpoint \
     --p2p.bootnodes=enode://your-bootnodes \
-    --p2p.static=/ip4/static-ip
+    --p2p.static=/ip4/static-ip \
+    --p2p.sync.onlyreqtostatic=true
