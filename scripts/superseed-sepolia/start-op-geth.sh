@@ -32,4 +32,5 @@ exec geth \
     --rollup.sequencerhttp=https://sepolia.superseed.xyz \
     --rollup.halt=major \
     --override.granite=1732546800 \
-    --override.holocene=1732633200                                        
+    --override.holocene=1732633200 \
+    --override.isthmus=1744905600    
