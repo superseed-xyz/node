@@ -19,4 +19,5 @@ exec op-node \
     --override.granite=1732546800 \
     --override.holocene=1732633200 \
     --override.pectrablobschedule=1742486400
+    --override.isthmus=1744905600
 
