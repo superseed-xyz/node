@@ -9,6 +9,7 @@ services:
       - .env
     volumes:
       - ./scripts/:/scripts
+      - ./config/:/config
       - /op-data/:/op-data
     ports:
       - 8545:8545
@@ -26,6 +27,7 @@ services:
       - .env
     volumes:
       - ./scripts/:/scripts
+      - ./config/:config
       - /op-data/:/op-data
     ports:
       - 9003:9003/udp
