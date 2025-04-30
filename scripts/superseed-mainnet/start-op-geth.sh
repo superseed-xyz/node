@@ -24,6 +24,7 @@ exec geth \
   --gcmode=full \
   --override.holocene=1736445601 \
   --override.granite=1726185601 \
+  --override.isthmus=1746806401 \
   --rollup.sequencerhttp=https://mainnet.superseed.xyz \
   --rollup.halt=major                                  
 

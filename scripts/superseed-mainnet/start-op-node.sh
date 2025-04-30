@@ -13,6 +13,7 @@ exec op-node \
     --rollup.config /config/${NETWORK_NAME}/rollup.json \
     --override.holocene=1736445601 \
     --override.granite=1726185601 \
+    --override.isthmus=1746806401 \
     --l1.beacon=https://your-beacon-node-endpoint \
     --p2p.bootnodes=enode://your-bootnodes \
     --p2p.static=/ip4/static-ip \
